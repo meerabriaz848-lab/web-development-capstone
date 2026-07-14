@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Settings</title>
+</head>
+<body>
+  <h1>Settings</h1>
+  <form>
+    <label>Username:</label>
+    <input type="text" id="username">
+    <br>
+    <label>Email:</label>
+    <input type="text" id="email">
+    <br>
+    <label>Password:</label>
+    <input type="text" id="password">
+    <br>
+    <button onclick="save()">Save</button>
+  </form>
+
+  <script>
+    function save() {
+      var username = document.getElementById("username").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      if (username == "") {
+        alert("error");
+      }
+      alert("saved");
+    }
+  </script>
+</body>
+</html>
