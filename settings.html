@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Settings</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 400px; margin: 40px auto; }
+    label { display: block; margin-top: 12px; font-weight: bold; }
+    input { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; }
+    .error { color: red; font-size: 0.85em; margin-top: 4px; display: none; }
+    input.invalid { border-color: red; }
+    button { margin-top: 16px; padding: 10px 20px; }
+    .success { color: green; margin-top: 16px; display: none; }
+  </style>
+</head>
+<body>
+  <h1>Settings</h1>
+  <form id="settingsForm" novalidate>
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" aria-describedby="usernameError">
+    <span class="error" id="usernameError">Username must be at least 3 characters.</span>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" aria-describedby="emailError">
+    <span class="error" id="emailError">Enter a valid email address.</span>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" aria-describedby="passwordError">
+    <span class="error" id="passwordError">Password must be at least 8 characters and include a number.</span>
+
+    <button type="submit">Save</button>
+    <p class="success" id="successMessage">Settings saved successfully.</p>
+  </form>
+
+  <script>
+    const form = document.getElementById('settingsForm');
+    const username = document.getElementById('username');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+
+    function validateUsername() {
+      const valid = username.value.trim().length >= 3;
+      toggleError(username, 'usernameError', valid);
+      return valid;
+    }
+
+    function validateEmail() {
+      const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const valid = pattern.test(email.value.trim());
+      toggleError(email, 'emailError', valid);
+      return valid;
+    }
+
+    function validatePassword() {
+      const value = password.value;
+      const valid = value.length >= 8 && /\d/.test(value);
+      toggleError(password, 'passwordError', valid);
+      return valid;
+    }
+
+    function toggleError(input, errorId, valid) {
+      const errorEl = document.getElementById(errorId);
+      if (valid) {
+        input.classList.remove('invalid');
+        errorEl.style.display = 'none';
+      } else {
+        input.classList.add('invalid');
+        errorEl.style.display = 'block';
+      }
+    }
+
+    username.addEventListener('input', validateUsername);
+    email.addEventListener('input', validateEmail);
+    password.addEventListener('input', validatePassword);
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const isUsernameValid = validateUsername();
+      const isEmailValid = validateEmail();
+      const isPasswordValid = validatePassword();
+
+      if (isUsernameValid && isEmailValid && isPasswordValid) {
+        document.getElementById('successMessage').style.display = 'block';
+      } else {
+        document.getElementById('successMessage').style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
