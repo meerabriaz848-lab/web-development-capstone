@@ -15,3 +15,10 @@
 - README.md - project overview
 - LICENSE - MIT license
 - .gitignore - Node.js ignore rules
+## Rules Learned From Prompting Exercise
+
+1. Never accept AI-generated form code without checking input `type` attributes explicitly — a vague prompt produced a password field with `type="text"` instead of `type="password"`, which is a silent security issue that doesn't show up just by looking at the rendered page.
+
+2. Always specify validation rules explicitly in the prompt (minimum lengths, required formats, required character types) rather than saying "add validation" — vague validation requests produce empty-string checks only, not real rules.
+
+3. Every form submit handler must call `event.preventDefault()` and be explicitly requested — otherwise generated forms default to a native submit that reloads the page and silently discards all entered data.
